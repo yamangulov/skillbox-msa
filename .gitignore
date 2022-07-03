@@ -37,3 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
+/task_1/src/main/resources/data/postgres/
