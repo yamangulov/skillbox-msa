@@ -1,0 +1,71 @@
+@startuml
+
+class User {
+  +ID: uuid
+  +profile_id: uuid
+}
+
+class Profile {
+  +ID: uuid
+  +name: varchar
+  +surname: varchar
+  +second_name: varchar
+  +birth_date: date
+  +avatar_link: varchar
+  +information: text
+  +city_id: integer
+  +contact_id: uuid
+  +gender_id: integer
+}
+
+class Gender {
+  +ID: integer
+  +name: varchar
+}
+
+class Contact {
+  +ID: uuid
+  +email: varchar
+  +phone: varchar
+}
+
+class Skill {
+  +ID: integer
+  +name: varchar
+}
+
+class City {
+  +ID: integer
+  +name: varchar
+}
+
+class Hard_skills {
+  +ID: uuid
+  +user_id: uuid
+  +skill_id: integer
+}
+
+class Subscription {
+  +ID: uuid
+  +subscriber_user_id: uuid
+  +subscribed_user_id: uuid
+}
+
+User "1" *-- "1" Profile
+
+Profile "1" o-- "1" City
+
+Profile "1" o-- "1" Contact
+
+Profile "1" o-- "1" Gender
+
+User "0..*" - "0..*" Skill
+(User, Skill) -- Hard_skills
+
+User "0..*" - "0..*" User
+(User, User) -- Subscription
+
+
+
+
+@enduml
