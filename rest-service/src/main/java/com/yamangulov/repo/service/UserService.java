@@ -119,8 +119,8 @@ public class UserService {
     }
 
     public String subscribe(UUID subscriber_id, UUID subscribed_id) {
-        User subsriber = userRepository.findById(subscriber_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        User subsribed = userRepository.findById(subscribed_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User subscriber = userRepository.findById(subscriber_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User subscribed = userRepository.findById(subscribed_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         subscriptionRepository.save(
                 new Subscription(
                     subscriber_id,
@@ -128,24 +128,24 @@ public class UserService {
                 )
         );
         return String.format(
-                "Пользователm %s с id = %s успешно подписан на пользователя %s с id = %s",
-                subsriber.getProfile().getSurname(),
-                subsriber.getId(),
-                subsribed.getProfile().getSurname(),
-                subsribed.getId()
+                "Пользователь %s с id = %s успешно подписан на пользователя %s с id = %s",
+                subscriber.getProfile().getSurname(),
+                subscriber.getId(),
+                subscribed.getProfile().getSurname(),
+                subscribed.getId()
         );
     }
 
     public String unsubscribe(UUID subscriber_id, UUID subscribed_id) {
-        User subsriber = userRepository.findById(subscriber_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        User subsribed = userRepository.findById(subscribed_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User subscriber = userRepository.findById(subscriber_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User subscribed = userRepository.findById(subscribed_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         subscriptionRepository.delete(subscriptionRepository.findBySubscriberUserIdAndSubscribedUserId(subscriber_id, subscribed_id));
         return String.format(
                 "Пользователь %s с id = %s успешно отписан на пользователя %s с id = %s",
-                subsriber.getProfile().getSurname(),
-                subsriber.getId(),
-                subsribed.getProfile().getSurname(),
-                subsribed.getId()
+                subscriber.getProfile().getSurname(),
+                subscriber.getId(),
+                subscribed.getProfile().getSurname(),
+                subscribed.getId()
         );
     }
 

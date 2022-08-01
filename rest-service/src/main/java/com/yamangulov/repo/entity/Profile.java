@@ -68,5 +68,14 @@ public class Profile {
         this.contact = contact;
     }
 
+    public Profile(UUID id, String name, String surname, String birthDate, Contact contact) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        LocalDate date = LocalDate.parse(birthDate);
+        this.birthDate = date.atStartOfDay(ZoneId.of("Europe/Moscow")).toInstant();
+        this.contact = contact;
+    }
+
     private Boolean deleted = Boolean.FALSE;
 }

@@ -25,4 +25,9 @@ public class City {
     public City(String name) {
         this.name = name;
     }
+
+    public City(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

@@ -8,10 +8,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableWebMvc
 @EnableSwagger2
-public class SkillboxEndpointApplication {
+public class SkillboxRestApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SkillboxEndpointApplication.class, args);
+		SpringApplication.run(SkillboxRestApplication.class, args);
 	}
 
 }

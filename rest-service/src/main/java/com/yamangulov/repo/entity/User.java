@@ -30,6 +30,17 @@ public class User {
         this.profile = profile;
     }
 
+    public User(UUID id, Profile profile) {
+        this.id = id;
+        this.profile = profile;
+    }
+
+    public User(UUID id) {
+        this.id = id;
+    }
+
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     @JsonIdentityInfo(

@@ -42,5 +42,11 @@ public class Contact {
         this.phone = phone;
     }
 
+    public Contact(UUID id, String email, String phone) {
+        this.id = id;
+        this.email = email;
+        this.phone = phone;
+    }
+
     private Boolean deleted = Boolean.FALSE;
 }
