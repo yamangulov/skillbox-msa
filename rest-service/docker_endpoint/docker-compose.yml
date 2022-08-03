@@ -5,12 +5,45 @@ services:
   skillbox-endpoint-db:
     container_name: skillbox-endpoint-db
     image: postgres:14.4
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      msa-net:
+        ipv4_address: 172.40.0.2
 
+  rest-service:
+    container_name: rest-service
+    image: bellsoft/liberica-openjdk-alpine:11
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://skillbox-endpoint-db:5432/users
+      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: users_scheme
+      SPRING_DATASOURCE_USERNAME: msa
+      SPRING_DATASOURCE_PASSWORD: 123456
+    ports:
+      - 8080:8080
+    volumes:
+      - ../src/main/resources/service:/service
+    command: ["java", "-jar", "/service/rest-service-0.0.1.jar"]
+    depends_on:
+      - skillbox-endpoint-db
+    networks:
+      msa-net:
+        ipv4_address: 172.40.0.3
+
+networks:
+  msa-net:
+    name: msa-net
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+      com.docker.network.bridge.name: msa-net
+    ipam:
+      config:
+        - subnet: 172.40.0.0/16
 
