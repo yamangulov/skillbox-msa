@@ -1,0 +1,857 @@
+databaseChangeLog:
+- changeSet:
+    id: 1659726593116-1
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR
+        - column:
+            constraints:
+              nullable: false
+            name: surname
+            type: VARCHAR
+        - column:
+            name: second_name
+            type: VARCHAR
+        - column:
+            constraints:
+              nullable: false
+            name: birth_date
+            type: date
+        - column:
+            name: avatar_link
+            type: VARCHAR
+        - column:
+            name: information
+            type: TEXT
+        - column:
+            name: city_id
+            type: SMALLINT
+        - column:
+            constraints:
+              nullable: false
+            name: contact_id
+            type: UUID
+        - column:
+            name: gender_id
+            type: SMALLINT
+        - column:
+            defaultValueBoolean: false
+            name: deleted
+            type: BOOLEAN
+        schemaName: users_scheme
+        tableName: profile
+- changeSet:
+    id: 1659726593116-2
+    author: stranger (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 90dbc46d-53c2-421e-b7ce-241a2dbd86b7
+        - column:
+            name: name
+            value: Petr
+        - column:
+            name: surname
+            value: Petrov
+        - column:
+            name: second_name
+        - column:
+            name: birth_date
+            valueDate: 2000-01-21
+        - column:
+            name: avatar_link
+        - column:
+            name: information
+        - column:
+            name: city_id
+        - column:
+            name: contact_id
+            value: 8fd7f4b5-ad0d-489f-a064-e7752c399a78
+        - column:
+            name: gender_id
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: profile
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: e0e3984d-6449-4034-a0b8-20e6df9c748f
+        - column:
+            name: name
+            value: Ivan
+        - column:
+            name: surname
+            value: Ivanov
+        - column:
+            name: second_name
+        - column:
+            name: birth_date
+            valueDate: 2000-11-24
+        - column:
+            name: avatar_link
+        - column:
+            name: information
+        - column:
+            name: city_id
+        - column:
+            name: contact_id
+            value: e0d8e775-ec04-4230-9103-b85fd1e214d8
+        - column:
+            name: gender_id
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: profile
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: f07f07f9-ad1a-46f1-ac92-cf20d760e8fb
+        - column:
+            name: name
+            value: Sidor
+        - column:
+            name: surname
+            value: Sidorov
+        - column:
+            name: second_name
+        - column:
+            name: birth_date
+            valueDate: 2010-11-24
+        - column:
+            name: avatar_link
+        - column:
+            name: information
+        - column:
+            name: city_id
+        - column:
+            name: contact_id
+            value: ae9410b2-16ca-4ab9-b6ea-19532f949b9f
+        - column:
+            name: gender_id
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: profile
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 37de6684-b122-44eb-bdaa-d41c208129de
+        - column:
+            name: name
+            value: Sidor
+        - column:
+            name: surname
+            value: Sidorovskiy
+        - column:
+            name: second_name
+        - column:
+            name: birth_date
+            valueDate: 2010-11-24
+        - column:
+            name: avatar_link
+        - column:
+            name: information
+        - column:
+            name: city_id
+        - column:
+            name: contact_id
+            value: 7bf0c615-1bec-4098-9390-c5e8b99f0169
+        - column:
+            name: gender_id
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: profile
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: d3a41056-caa2-4a69-af6f-c0be1eae9575
+        - column:
+            name: name
+            value: Sidor
+        - column:
+            name: surname
+            value: Magnitov
+        - column:
+            name: second_name
+        - column:
+            name: birth_date
+            valueDate: 2010-11-24
+        - column:
+            name: avatar_link
+        - column:
+            name: information
+        - column:
+            name: city_id
+        - column:
+            name: contact_id
+            value: 41c450c2-63d4-446b-b51d-52043b1a0534
+        - column:
+            name: gender_id
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: profile
+- changeSet:
+    id: 1659726593116-3
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: city_pkey
+            name: id
+            type: SMALLINT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR
+        schemaName: users_scheme
+        tableName: city
+- changeSet:
+    id: 1659726593116-4
+    author: stranger (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 1
+        - column:
+            name: name
+            value: Moscow
+        schemaName: users_scheme
+        tableName: city
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 2
+        - column:
+            name: name
+            value: Yaroslavl
+        schemaName: users_scheme
+        tableName: city
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 3
+        - column:
+            name: name
+            value: Vologda
+        schemaName: users_scheme
+        tableName: city
+- changeSet:
+    id: 1659726593116-5
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR
+        - column:
+            constraints:
+              nullable: false
+            name: phone
+            type: VARCHAR
+        - column:
+            defaultValueBoolean: false
+            name: deleted
+            type: BOOLEAN
+        schemaName: users_scheme
+        tableName: contact
+- changeSet:
+    id: 1659726593116-6
+    author: stranger (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 8fd7f4b5-ad0d-489f-a064-e7752c399a78
+        - column:
+            name: email
+            value: test@test.ru
+        - column:
+            name: phone
+            value: '9106664893'
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: contact
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: e0d8e775-ec04-4230-9103-b85fd1e214d8
+        - column:
+            name: email
+            value: test222@test.ru
+        - column:
+            name: phone
+            value: '999999999'
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: contact
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: ae9410b2-16ca-4ab9-b6ea-19532f949b9f
+        - column:
+            name: email
+            value: test3@test.ru
+        - column:
+            name: phone
+            value: '77777777'
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: contact
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 7bf0c615-1bec-4098-9390-c5e8b99f0169
+        - column:
+            name: email
+            value: test4@test.ru
+        - column:
+            name: phone
+            value: '111111111111111'
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: contact
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 41c450c2-63d4-446b-b51d-52043b1a0534
+        - column:
+            name: email
+            value: test5@test.ru
+        - column:
+            name: phone
+            value: '2222222222222'
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: contact
+- changeSet:
+    id: 1659726593116-7
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: profile_id
+            type: UUID
+        - column:
+            defaultValueBoolean: false
+            name: deleted
+            type: BOOLEAN
+        schemaName: users_scheme
+        tableName: user
+- changeSet:
+    id: 1659726593116-8
+    author: stranger (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: ae666352-da3a-4c90-ad70-6a8f500fcbcc
+        - column:
+            name: profile_id
+            value: e0e3984d-6449-4034-a0b8-20e6df9c748f
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: user
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: aa1c1b72-5bfc-4da2-ab77-102226c71dbc
+        - column:
+            name: profile_id
+            value: 90dbc46d-53c2-421e-b7ce-241a2dbd86b7
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: user
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 74406a64-93c6-4c34-b8a2-42f57869dbc0
+        - column:
+            name: profile_id
+            value: f07f07f9-ad1a-46f1-ac92-cf20d760e8fb
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: user
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: 4054b5b2-20d9-45c0-9673-824948d3df58
+        - column:
+            name: profile_id
+            value: 37de6684-b122-44eb-bdaa-d41c208129de
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: user
+    - insert:
+        columns:
+        - column:
+            name: id
+            value: d3ae027a-4698-4479-8730-a764cfb27344
+        - column:
+            name: profile_id
+            value: d3a41056-caa2-4a69-af6f-c0be1eae9575
+        - column:
+            name: deleted
+            valueBoolean: false
+        schemaName: users_scheme
+        tableName: user
+- changeSet:
+    id: 1659726593116-9
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: gender_pkey
+            name: id
+            type: SMALLINT
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR
+        schemaName: users_scheme
+        tableName: gender
+- changeSet:
+    id: 1659726593116-10
+    author: stranger (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 1
+        - column:
+            name: name
+            value: male
+        schemaName: users_scheme
+        tableName: gender
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 2
+        - column:
+            name: name
+            value: female
+        schemaName: users_scheme
+        tableName: gender
+- changeSet:
+    id: 1659726593116-11
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: user_id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: skill_id
+            type: SMALLINT
+        schemaName: users_scheme
+        tableName: hard_skills
+- changeSet:
+    id: 1659726593116-12
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: skill_pkey
+            name: id
+            type: SMALLINT
+        - column:
+            name: name
+            type: VARCHAR
+        schemaName: users_scheme
+        tableName: skill
+- changeSet:
+    id: 1659726593116-13
+    author: stranger (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 1
+        - column:
+            name: name
+            value: java
+        schemaName: users_scheme
+        tableName: skill
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 2
+        - column:
+            name: name
+            value: php
+        schemaName: users_scheme
+        tableName: skill
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 4
+        - column:
+            name: name
+            value: scala developer
+        schemaName: users_scheme
+        tableName: skill
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 3
+        - column:
+            name: name
+            value: js developer
+        schemaName: users_scheme
+        tableName: skill
+- changeSet:
+    id: 1659726593116-14
+    author: stranger (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: subscriber_user_id
+            type: UUID
+        - column:
+            constraints:
+              nullable: false
+            name: subscribed_user_id
+            type: UUID
+        schemaName: users_scheme
+        tableName: subscription
+- changeSet:
+    id: 1659726593116-15
+    author: stranger (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: city_id
+        indexName: city_id_idx
+        schemaName: users_scheme
+        tableName: profile
+- changeSet:
+    id: 1659726593116-16
+    author: stranger (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: gender_id
+        - column:
+            name: city_id
+        indexName: gender_id_city_id_idx
+        schemaName: users_scheme
+        tableName: profile
+- changeSet:
+    id: 1659726593116-17
+    author: stranger (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: gender_id
+        indexName: gender_id_idx
+        schemaName: users_scheme
+        tableName: profile
+- changeSet:
+    id: 1659726593116-18
+    author: stranger (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: profile_id_key
+        schemaName: users_scheme
+        tableName: profile
+- changeSet:
+    id: 1659726593116-19
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: profile_id
+        baseTableName: user
+        baseTableSchemaName: users_scheme
+        constraintName: user_profile_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: profile
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-20
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: city_id
+        baseTableName: profile
+        baseTableSchemaName: users_scheme
+        constraintName: profile_city_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: city
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-21
+    author: stranger (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: contact_id_key
+        schemaName: users_scheme
+        tableName: contact
+- changeSet:
+    id: 1659726593116-22
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: contact_id
+        baseTableName: profile
+        baseTableSchemaName: users_scheme
+        constraintName: profile_contact_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: CASCADE
+        referencedColumnNames: id
+        referencedTableName: contact
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-23
+    author: stranger (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+        indexName: user_id_key
+        schemaName: users_scheme
+        tableName: user
+        unique: true
+- changeSet:
+    id: 1659726593116-24
+    author: stranger (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: name
+        constraintName: gender_name_key
+        schemaName: users_scheme
+        tableName: gender
+- changeSet:
+    id: 1659726593116-25
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: gender_id
+        baseTableName: profile
+        baseTableSchemaName: users_scheme
+        constraintName: profile_gender_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: gender
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-26
+    author: stranger (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            defaultValueComputed: gen_random_uuid()
+            name: id
+        indexName: hard_skills_id_key
+        schemaName: users_scheme
+        tableName: hard_skills
+        unique: true
+- changeSet:
+    id: 1659726593116-27
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: user_id
+        baseTableName: hard_skills
+        baseTableSchemaName: users_scheme
+        constraintName: hard_skills_user_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-28
+    author: stranger (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: id
+        constraintName: subscription_id_key
+        schemaName: users_scheme
+        tableName: subscription
+- changeSet:
+    id: 1659726593116-29
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: subscribed_user_id
+        baseTableName: subscription
+        baseTableSchemaName: users_scheme
+        constraintName: subscription_subscribed_user_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-30
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: subscriber_user_id
+        baseTableName: subscription
+        baseTableSchemaName: users_scheme
+        constraintName: subscription_subscriber_user_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: user
+        referencedTableSchemaName: users_scheme
+        validate: true
+- changeSet:
+    id: 1659726593116-31
+    author: stranger (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: skill_id
+        baseTableName: hard_skills
+        baseTableSchemaName: users_scheme
+        constraintName: hard_skills_skill_fk
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: skill
+        referencedTableSchemaName: users_scheme
+        validate: true
+
