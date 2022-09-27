@@ -22,7 +22,7 @@ services:
 #    restart: unless-stopped
 #    environment:
 #      SPRING_DATASOURCE_URL: jdbc:postgresql://skillbox-endpoint-db:5432/users
-#      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: users_scheme
+#      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: public
 #      SPRING_DATASOURCE_USERNAME: msa
 #      SPRING_DATASOURCE_PASSWORD: 123456
 #    ports:

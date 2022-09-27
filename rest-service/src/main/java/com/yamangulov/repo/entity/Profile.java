@@ -1,6 +1,8 @@
 package com.yamangulov.repo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,9 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@SQLDelete(sql = "update users_scheme.profile set deleted=true where id=?")
+@SQLDelete(sql = "update public.profile set deleted=true where id=?")
 @Where(clause = "deleted = false")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Profile {
     @Id
     @GeneratedValue
@@ -35,6 +38,7 @@ public class Profile {
     private String secondName;
 
     @Column(name = "birth_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "UTC")
     private Instant birthDate;
 
     @Column(name = "avatar_link")

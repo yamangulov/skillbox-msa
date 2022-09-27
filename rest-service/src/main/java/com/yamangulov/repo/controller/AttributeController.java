@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(name = "/attr", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/attr", produces = MediaType.APPLICATION_JSON_VALUE)
 @Api
 public class AttributeController {
     private final AttributeService attributeService;

@@ -20,7 +20,7 @@ import java.util.UUID;
 @Setter
 @RequiredArgsConstructor
 @ToString
-@SQLDelete(sql = "update users_scheme.contact set deleted=true where id=?")
+@SQLDelete(sql = "update public.contact set deleted=true where id=?")
 @Where(clause = "deleted = false")
 public class Contact {
     @Id
