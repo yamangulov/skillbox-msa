@@ -1,0 +1,51 @@
+version: '3.3'
+
+services:
+
+  skillbox-endpoint-db-helm:
+    container_name: skillbox-endpoint-db-helm
+    image: postgres:14.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    labels:
+      kompose.service.type: nodeport
+      kompose.service.expose: "true"
+    networks:
+      msa-net:
+        ipv4_address: 172.40.0.2
+
+  rest-service-helm:
+    container_name: rest-service-helm
+    image: yamangulov/rest-service:0.0.1
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://skillbox-endpoint-db-helm:5435/postgres
+      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: public
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - 8080:8080
+    depends_on:
+      - skillbox-endpoint-db-helm
+    labels:
+      kompose.service.type: nodeport
+      kompose.service.expose: "true"
+    networks:
+      msa-net:
+        ipv4_address: 172.40.0.3
+
+networks:
+  msa-net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+      com.docker.network.bridge.name: msa-net
+    ipam:
+      config:
+        - subnet: 172.40.0.0/16
+

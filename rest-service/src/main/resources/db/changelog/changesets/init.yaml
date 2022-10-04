@@ -242,9 +242,6 @@ databaseChangeLog:
     - insert:
         columns:
         - column:
-            name: id
-            valueNumeric: 1
-        - column:
             name: name
             value: Moscow
         schemaName: public
@@ -252,18 +249,12 @@ databaseChangeLog:
     - insert:
         columns:
         - column:
-            name: id
-            valueNumeric: 2
-        - column:
             name: name
             value: Yaroslavl
         schemaName: public
         tableName: city
     - insert:
         columns:
-        - column:
-            name: id
-            valueNumeric: 3
         - column:
             name: name
             value: Vologda
@@ -497,18 +488,12 @@ databaseChangeLog:
     - insert:
         columns:
         - column:
-            name: id
-            valueNumeric: 1
-        - column:
             name: name
             value: male
         schemaName: public
         tableName: gender
     - insert:
         columns:
-        - column:
-            name: id
-            valueNumeric: 2
         - column:
             name: name
             value: female
@@ -562,18 +547,12 @@ databaseChangeLog:
     - insert:
         columns:
         - column:
-            name: id
-            valueNumeric: 1
-        - column:
             name: name
             value: java
         schemaName: public
         tableName: skill
     - insert:
         columns:
-        - column:
-            name: id
-            valueNumeric: 2
         - column:
             name: name
             value: php
@@ -582,18 +561,12 @@ databaseChangeLog:
     - insert:
         columns:
         - column:
-            name: id
-            valueNumeric: 4
-        - column:
             name: name
             value: scala developer
         schemaName: public
         tableName: skill
     - insert:
         columns:
-        - column:
-            name: id
-            valueNumeric: 3
         - column:
             name: name
             value: js developer

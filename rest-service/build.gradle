@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id "com.dorongold.task-tree" version '2.1.0'
 	id 'nebula.integtest' version '9.6.2'
+	id 'com.google.cloud.tools.jib' version '3.3.0'
 }
 
 group = 'com.yamangulov'

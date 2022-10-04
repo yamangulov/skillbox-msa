@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert -c
+    kompose.service.expose: "true"
+    kompose.service.type: nodeport
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rest-service-helm
+  name: rest-service-helm
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: rest-service-helm
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+status:
+  loadBalancer: {}
