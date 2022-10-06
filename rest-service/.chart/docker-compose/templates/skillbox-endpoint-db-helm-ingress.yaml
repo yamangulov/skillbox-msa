@@ -8,17 +8,19 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: skillbox-endpoint-db-helm
-  name: skillbox-endpoint-db-helm
+    io.kompose.service: {{.Values.dbmsName}}
+  name: {{.Values.dbmsName}}
+  namespace: {{.Values.namespace}}
 spec:
   rules:
-    - http:
+    - host: {{.Values.host}}
+      http:
         paths:
           - backend:
               service:
-                name: skillbox-endpoint-db-helm
+                name: {{.Values.dbmsName}}
                 port:
-                  number: 5435
+                  number: {{.Values.ingressDbPort}}
             path: /
             pathType: Prefix
 status:

@@ -10,6 +10,7 @@ metadata:
   labels:
     io.kompose.service: skillbox-endpoint-db-helm
   name: skillbox-endpoint-db-helm
+  namespace: {{.Values.namespace}}
 spec:
   ports:
     - name: "5435"

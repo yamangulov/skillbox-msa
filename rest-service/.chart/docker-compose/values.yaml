@@ -1,0 +1,6 @@
+restName: rest-service-helm
+restServicePort: 8080
+dbmsName: skillbox-endpoint-db-helm
+ingressDbPort: 5435
+namespace: &namespace default
+

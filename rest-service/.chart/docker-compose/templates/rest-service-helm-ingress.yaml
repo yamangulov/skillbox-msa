@@ -8,17 +8,19 @@ metadata:
     kompose.version: 1.26.1 (a9d05d509)
   creationTimestamp: null
   labels:
-    io.kompose.service: rest-service-helm
-  name: rest-service-helm
+    io.kompose.service: {{.Values.restName}}
+  name: {{.Values.restName}}
+  namespace: {{.Values.namespace}}
 spec:
   rules:
-    - http:
+    - host: {{.Values.host}}
+      http:
         paths:
           - backend:
               service:
-                name: rest-service-helm
+                name: {{.Values.restName}}
                 port:
-                  number: 8080
+                  number: {{.Values.restServicePort}}
             path: /
             pathType: Prefix
 status:
