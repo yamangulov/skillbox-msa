@@ -1,0 +1,55 @@
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+stages:
+  - feature
+  - test
+  - dev
+  - preprod
+  - prod
+
+# в задаче требований, что делать на этом шаге нет, предполагаем, что здесь идет разработка отдельных функций,
+# разработчик просто проверяет, чтобы артефакт с новой функцией корректно собрался, и передает результат тестировщикам,
+# секции cache нет, так как собранный артефакт здесь не нужно сохранять и передавать в следующие шаги
+feature development:
+  stage: feature
+  image: gradle:7.5.0-jdk11
+  script: gradle assemble
+
+feature install stand:
+  tags:
+    - feature
+  stage: feature
+  script: helm upgrade docker-compose-feature docker-compose --install --namespace=yamangulov-feature --values=./.chart/values.yaml --values=.chart/values-yamangulov-feature.yaml
+
+testing:
+  stage: test
+  image: gradle:7.5.0-jdk11
+  cache:
+    key: "${CI_JOB_NAME}"
+    path:
+      - .sonar/cache
+  script: gradle sonarqube
+  rules:
+    - if: '$CI_BUILD_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+dev install stand:
+  tags:
+    - dev
+  stage: dev
+  script: helm upgrade docker-compose-dev docker-compose --install --namespace=yamangulov-dev --values=./.chart/values.yaml --values=.chart/values-yamangulov-dev.yaml
+
+preprod install stand:
+  tags:
+    - preprod
+  stage: preprod
+  script: helm upgrade docker-compose-preprod docker-compose --install --namespace=yamangulov-preprod --values=./.chart/values.yaml --values=.chart/values-yamangulov-preprod.yaml
+
+# этот этап в задачах не требовался, заготовка на будущие задачи
+#prod install stand:
+#  tags:
+#    - prod
+#  stage: prod
+#  script: helm upgrade docker-compose-prod docker-compose --install --namespace=yamangulov-prod --values=./.chart/values.yaml --values=.chart/values-yamangulov-prod.yaml
+#  when: manual
+
