@@ -3,53 +3,111 @@ variables:
   GIT_DEPTH: "0"
 stages:
   - feature
+  - feature-clean-stand
+  - feature-install-stand
   - test
-  - dev
-  - preprod
-  - prod
+  - dev-clean-stand
+  - dev-install-stand
+  - preprod-clean-stand
+  - preprod-install-stand
+#  - prod-clean-stand
+#  - prod-install-stand
 
 # в задаче требований, что делать на этом шаге нет, предполагаем, что здесь идет разработка отдельных функций,
 # разработчик просто проверяет, чтобы артефакт с новой функцией корректно собрался, и передает результат тестировщикам,
 # секции cache нет, так как собранный артефакт здесь не нужно сохранять и передавать в следующие шаги
 feature development:
+  tags:
+    - feature
   stage: feature
   image: gradle:7.5.0-jdk11
-  script: gradle assemble
+  script:
+    - cd rest-service
+    - ./gradlew assemble
+
+feature clean stand:
+  tags:
+    - feature
+  stage: feature-clean-stand
+  allow_failure: true
+  script:
+    - cd rest-service/.chart
+    - helm uninstall docker-compose-feature --namespace=yamangulov-feature
 
 feature install stand:
   tags:
     - feature
-  stage: feature
-  script: helm upgrade docker-compose-feature docker-compose --install --namespace=yamangulov-feature --values=./.chart/values.yaml --values=.chart/values-yamangulov-feature.yaml
+  stage: feature-install-stand
+  script:
+    - cd rest-service/.chart/
+    - helm install docker-compose-feature docker-compose --namespace=yamangulov-feature --values=docker-compose/values-yamangulov-feature.yaml
 
 testing:
   stage: test
   image: gradle:7.5.0-jdk11
   cache:
     key: "${CI_JOB_NAME}"
-    path:
+    paths:
       - .sonar/cache
-  script: gradle sonarqube
+  script:
+    - cd rest-service
+    - gradle sonarqube -Dsonar.qualitygate.wait=true
   rules:
     - if: '$CI_BUILD_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+dev clean stand:
+  tags:
+    - dev
+  stage: dev-clean-stand
+  allow_failure: true
+  script:
+    - cd rest-service/.chart
+    - helm uninstall docker-compose-dev --namespace=yamangulov-dev
 
 dev install stand:
   tags:
     - dev
-  stage: dev
-  script: helm upgrade docker-compose-dev docker-compose --install --namespace=yamangulov-dev --values=./.chart/values.yaml --values=.chart/values-yamangulov-dev.yaml
+  stage: dev-install-stand
+  image: alpine/helm:3.10.0
+  script:
+    - cd rest-service/.chart/
+    - helm install docker-compose-dev docker-compose --namespace=yamangulov-dev --values=docker-compose/values-yamangulov-dev.yaml
+
+preprod clean stand:
+  tags:
+    - preprod
+  stage: preprod-clean-stand
+  allow_failure: true
+  script:
+    - cd rest-service/.chart
+    - helm uninstall docker-compose-preprod --namespace=yamangulov-preprod
 
 preprod install stand:
   tags:
     - preprod
-  stage: preprod
-  script: helm upgrade docker-compose-preprod docker-compose --install --namespace=yamangulov-preprod --values=./.chart/values.yaml --values=.chart/values-yamangulov-preprod.yaml
+  stage: preprod-install-stand
+  script:
+    - cd rest-service/.chart/
+    - helm install docker-compose-preprod docker-compose --namespace=yamangulov-preprod --values=docker-compose/values-yamangulov-preprod.yaml
 
 # этот этап в задачах не требовался, заготовка на будущие задачи
+
+#prod clean stand:
+#  tags:
+#    - prod
+#  stage: prod-clean-stand
+#  allow_failure: true
+#  script:
+#    - cd rest-service/.chart
+#    - helm uninstall docker-compose-prod --namespace=yamangulov-prod
+
 #prod install stand:
 #  tags:
 #    - prod
 #  stage: prod
-#  script: helm upgrade docker-compose-prod docker-compose --install --namespace=yamangulov-prod --values=./.chart/values.yaml --values=.chart/values-yamangulov-prod.yaml
+#  script:
+#    - cd rest-service/.chart/
+#    - helm install docker-compose-prod docker-compose --namespace=yamangulov-prod --values=docker-compose/values-yamangulov-prod.yaml
 #  when: manual
+
 

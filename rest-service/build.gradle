@@ -21,8 +21,10 @@ tasks.named('sonarqube').configure {
 
 sonarqube {
 	properties {
-		property 'sonar.projectKey', 'skillbox-msa'
+		property "sonar.projectKey", "nairsharif_skillbox-msa_AYPCmRJcBjzRTKmlTJvN"
+		property "sonar.qualitygate.wait", true
 		property 'sonar.organization', 'nairsharif'
+		property 'sonar.login', 'squ_d5f168821113d0e8208e8a95968a3172cd405523'
 	}
 }
 
