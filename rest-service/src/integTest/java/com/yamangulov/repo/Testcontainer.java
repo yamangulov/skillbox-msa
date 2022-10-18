@@ -5,6 +5,8 @@ import com.yamangulov.repo.containers.AbstractContainerDatabaseTest;
 import com.yamangulov.repo.containers.PostgresContainerWrapper;
 import com.yamangulov.repo.entity.User;
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Testcontainer extends AbstractContainerDatabaseTest {
+    Logger log = LoggerFactory.getLogger(Testcontainer.class);
 
     @Container
     private static final PostgreSQLContainer<PostgresContainerWrapper> postgresContainer = new PostgresContainerWrapper();
@@ -190,5 +193,29 @@ public class Testcontainer extends AbstractContainerDatabaseTest {
         User user = objectMapper.readValue(userString, User.class);
         mockMvc.perform(MockMvcRequestBuilders.post("/users/removeSkill/" + user.getId().toString() + "/1"))
                 .andExpect(status().isOk());
+    }
+
+    @Order(12)
+    @Test
+    void smokeTest() throws Exception {
+        String content = mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("email", "test555@test.ru")
+                        .param("phone", "55555")
+                        .param("name", "Sergey")
+                        .param("surname", "Sergeev")
+                        .param("birthDate", "2010-05-23")
+                )
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        log.info("Content is: {}", content);
+    }
+
+    @Order(13)
+    @Test
+    void regressionTest() {
+
     }
 }
