@@ -6,6 +6,9 @@ stages:
   - feature-clean-stand
   - feature-install-stand
   - test
+  - smoke
+  - regress
+#  - load
   - dev-clean-stand
   - dev-install-stand
   - preprod-clean-stand
@@ -52,6 +55,24 @@ testing:
   script:
     - cd rest-service
     - gradle sonarqube -Dsonar.qualitygate.wait=true
+  rules:
+    - if: '$CI_BUILD_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+smoke testing:
+  stage: smoke
+  image: gradle:7.5.0-jdk11
+  script:
+    - cd rest-service
+    - gradle clean integrationTest --tests "*smokeTest*"
+  rules:
+    - if: '$CI_BUILD_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+
+regression testing:
+  stage: regress
+  image: gradle:7.5.0-jdk11
+  script:
+    - cd rest-service
+    - gradle clean integrationTest --tests "*regressionTest*"
   rules:
     - if: '$CI_BUILD_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
 

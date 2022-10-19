@@ -3,7 +3,10 @@ package com.yamangulov.repo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yamangulov.repo.containers.AbstractContainerDatabaseTest;
 import com.yamangulov.repo.containers.PostgresContainerWrapper;
+import com.yamangulov.repo.entity.Subscription;
 import com.yamangulov.repo.entity.User;
+import com.yamangulov.repo.repository.SubscriptionRepository;
+import com.yamangulov.repo.service.UserService;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +26,11 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Testcontainers(disabledWithoutDocker = true)
@@ -44,6 +52,12 @@ public class Testcontainer extends AbstractContainerDatabaseTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    private UserService userService;
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
@@ -209,13 +223,89 @@ public class Testcontainer extends AbstractContainerDatabaseTest {
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
-                .getContentAsString();
-        log.info("Content is: {}", content);
+                .getContentAsString(StandardCharsets.UTF_8);
+        content = content.substring(content.length() - 36);
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/" + content))
+                .andExpect(status().isOk());
     }
 
     @Order(13)
     @Test
-    void regressionTest() {
+    void regressionTest() throws Exception {
+        String content_1 = mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("email", "test666@test.ru")
+                        .param("phone", "66666")
+                        .param("name", "Sergio")
+                        .param("surname", "Galan")
+                        .param("birthDate", "2010-05-23")
+                )
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8);
+        String userId_1 = content_1.substring(content_1.length() - 36);
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/" + userId_1))
+                .andExpect(status().isOk());
+
+        String content_2 = mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("email", "test777@test.ru")
+                        .param("phone", "7777")
+                        .param("name", "Sergo")
+                        .param("surname", "Kamadze")
+                        .param("birthDate", "2010-05-23")
+                )
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString(StandardCharsets.UTF_8);
+        String userId_2 = content_2.substring(content_2.length() - 36);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/" + userId_2))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/subscribe/" + userId_1 + "/" + userId_2))
+                .andExpect(status().isOk());
+
+        // здесь использован репозиторий, потому что в предыдущих заданиях проекта не было ТЗ на реализацию
+        // метода для получения подписки в каких-либо сервисах и в контроллерах
+        Subscription subscriptionBefore = subscriptionRepository
+                .findBySubscriberUserIdAndSubscribedUserId(UUID.fromString(userId_1), UUID.fromString(userId_2));
+        assertThat(subscriptionBefore, notNullValue());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/unsubscribe/" + userId_1 + "/" + userId_2))
+                .andExpect(status().isOk());
+
+        Subscription subscriptionAfter = subscriptionRepository
+                .findBySubscriberUserIdAndSubscribedUserId(UUID.fromString(userId_1), UUID.fromString(userId_2));
+        assertThat(subscriptionAfter, nullValue());
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/" + userId_2)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .param("surname", "Kamikadze")
+                )
+                .andExpect(status().isOk());
+        // аналогично, в ТЗ ранее не было методов в контроллере для получения объекта класса User, существующий метод
+        // getUser получает данные в формате, не приводимом к типу User, переделать можно было бы, но тест я пишу
+        // для текущей моей реализации без того, чтобы ее изменять, поэтому получаю User из сервиса
+        User user2 = userService.getUser(UUID.fromString(userId_2));
+        assertThat(user2.getProfile().getSurname(), equalTo("Kamikadze"));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/" + userId_1))
+                .andExpect(status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/" + userId_2))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/" + userId_1))
+                .andExpect(status().is4xxClientError());
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/" + userId_2))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Order(14)
+    @Test
+    void loadTest() {
 
     }
 }
